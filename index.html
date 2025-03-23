@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escala de Equipes 2025 - ATIVA Logística</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Tema Claro */
+        :root {
+            --primary-color: #1a56db;
+            --primary-hover: #1e40af;
+            --text-color: #111827;
+            --bg-color: #ffffff;
+            --card-bg: #ffffff;
+            --border-color: #e5e7eb;
+            --header-bg: #1a56db;
+            --header-text: #ffffff;
+        }
+        
+        /* Tema Escuro */
+        .dark {
+            --primary-color: #3b82f6;
+            --primary-hover: #60a5fa;
+            --text-color: #e5e7eb;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --border-color: #374151;
+            --header-bg: #0f172a;
+            --header-text: #ffffff;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .navbar {
+            background-color: var(--header-bg);
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .team-1 {
+            background-color: #1a56db;
+            color: white;
+        }
+        
+        .team-2 {
+            background-color: #059669;
+            color: white;
+        }
+        
+        .team-3 {
+            background-color: #7c3aed;
+            color: white;
+        }
+        
+        .team-4 {
+            background-color: #ea580c;
+            color: white;
+        }
+        
+        .badge-team {
+            padding: 0.35em 0.65em;
+            border-radius: 1rem;
+            font-weight: 600;
+        }
+        
+        table {
+            width: 100%;
+        }
+        
+        th {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        .dark th {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        tr:hover {
+            background-color: rgba(0, 0, 0, 0.03);
+        }
+        
+        .dark tr:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+        
+        footer {
+            margin-top: 2rem;
+            padding: 1.5rem 0;
+            background-color: var(--header-bg);
+            color: var(--header-text);
+        }
+        
+        .info-box {
+            padding: 1rem;
+            border-radius: 0.25rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid;
+        }
+        
+        .info-box.info {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-color: #3b82f6;
+        }
+        
+        .info-box.warning {
+            background-color: rgba(245, 158, 11, 0.1);
+            border-color: #f59e0b;
+        }
+        
+        .dark .info-box.info {
+            background-color: rgba(59, 130, 246, 0.2);
+        }
+        
+        .dark .info-box.warning {
+            background-color: rgba(245, 158, 11, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <svg height="40" viewBox="0 0 200 70" xmlns="http://www.w3.org/2000/svg">
+                    <text x="10" y="50" fill="#fff" font-family="Arial" font-size="40" font-weight="bold">ATIVA LOG</text>
+                </svg>
+                Escala de Equipes 2025
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#teams-section"><i class="fas fa-users"></i> Equipes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#schedule-section"><i class="fas fa-calendar-week"></i> Escala</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#monthly-section"><i class="fas fa-sync-alt"></i> Remanejamento</a>
+                    </li>
+                    <li class="nav-item">
+                        <button id="theme-toggle" class="btn nav-link">
+                            <i class="fas fa-moon"></i> Tema
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Filtros -->
+        <div class="card mb-4">
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0"><i class="fas fa-filter"></i> Filtros</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-5 mb-3 mb-md-0">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                            <select id="month-filter" class="form-select">
+                                <option value="">Todos os Meses</option>
+                                <option value="3">Março</option>
+                                <option value="4">Abril</option>
+                                <option value="5">Maio</option>
+                                <option value="6">Junho</option>
+                                <option value="7">Julho</option>
+                                <option value="8">Agosto</option>
+                                <option value="9">Setembro</option>
+                                <option value="10">Outubro</option>
+                                <option value="11">Novembro</option>
+                                <option value="12">Dezembro</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-5 mb-3 mb-md-0">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-users"></i></span>
+                            <select id="team-filter" class="form-select">
+                                <option value="">Todas as Equipes</option>
+                                <option value="1">Equipe 1</option>
+                                <option value="2">Equipe 2</option>
+                                <option value="3">Equipe 3</option>
+                                <option value="4">Equipe 4</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button id="reset-filters" class="btn btn-secondary w-100">
+                            <i class="fas fa-undo"></i> Limpar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Composição das Equipes -->
+        <div class="card mb-4" id="teams-section">
+            <div class="card-header" style="background-color: #1a56db; color: white;">
+                <h5 class="mb-0"><i class="fas fa-users"></i> Composição das Equipes</h5>
+            </div>
+            <div class="card-body">
+                <div class="row" id="team-cards">
+                    <div class="col-md-6 col-lg-3 mb-3">
+                        <div class="card h-100 border-0 shadow-sm team-card" data-team="1">
+                            <div class="card-header team-1">
+                                <h5 class="mb-0">Equipe 1</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Pedro</li>
+                                    <li class="list-group-item">Alan</li>
+                                    <li class="list-group-item">Baixinho</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-3">
+                        <div class="card h-100 border-0 shadow-sm team-card" data-team="2">
+                            <div class="card-header team-2">
+                                <h5 class="mb-0">Equipe 2</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Márcio</li>
+                                    <li class="list-group-item">Rodrigo</li>
+                                    <li class="list-group-item">Fábio</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-3">
+                        <div class="card h-100 border-0 shadow-sm team-card" data-team="3">
+                            <div class="card-header team-3">
+                                <h5 class="mb-0">Equipe 3</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Marcelo</li>
+                                    <li class="list-group-item">Wallace</li>
+                                    <li class="list-group-item">Renan</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-3">
+                        <div class="card h-100 border-0 shadow-sm team-card" data-team="4">
+                            <div class="card-header team-4">
+                                <h5 class="mb-0">Equipe 4</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Ibra</li>
+                                    <li class="list-group-item">Matheus</li>
+                                    <li class="list-group-item">William</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Escala de Equipes -->
+        <div class="card mb-4" id="schedule-section">
+            <div class="card-header" style="background-color: #059669; color: white;">
+                <h5 class="mb-0"><i class="fas fa-calendar-week"></i> Escala de Equipes 2025</h5>
+            </div>
+            <div class="card-body">
+                <div class="info-box info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Esta escala começa em <strong>24 de março de 2025</strong> e vai até o final do ano. A rotação de equipes acontece semanalmente.
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-hover" id="schedule-table">
+                        <thead>
+                            <tr>
+                                <th>Semana</th>
+                                <th>Período</th>
+                                <th>Equipe</th>
+                                <th>Membros</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dados gerados via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Remanejamento Mensal -->
+        <div class="card mb-4" id="monthly-section">
+            <div class="card-header" style="background-color: #ea580c; color: white;">
+                <h5 class="mb-0"><i class="fas fa-sync-alt"></i> Remanejamento Mensal</h5>
+            </div>
+            <div class="card-body">
+                <div class="info-box warning">
+                    <i class="fas fa-info-circle me-2"></i>
+                    O remanejamento mensal começa em <strong>abril de 2025</strong> e segue um rodízio entre as equipes.
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-hover" id="monthly-table">
+                        <thead>
+                            <tr>
+                                <th>Mês</th>
+                                <th>Equipe de Remanejamento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dados gerados via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center">
+        <div class="container">
+            <p>&copy; 2025 ATIVA Logística - Sistema de Escala de Equipes</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Script para funcionalidades -->
+    <script>
+        // Dados das equipes
+        const teams = {
+            1: {
+                name: "Equipe 1",
+                members: ["Pedro", "Alan", "Baixinho"],
+                class: "team-1"
+            },
+            2: {
+                name: "Equipe 2",
+                members: ["Márcio", "Rodrigo", "Fábio"],
+                class: "team-2"
+            },
+            3: {
+                name: "Equipe 3",
+                members: ["Marcelo", "Wallace", "Renan"],
+                class: "team-3"
+            },
+            4: {
+                name: "Equipe 4",
+                members: ["Ibra", "Matheus", "William"],
+                class: "team-4"
+            }
+        };
+
+        // Função para formatar data como DD/MM/YYYY
+        function formatDate(date) {
+            return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+        }
+
+        // Função para gerar o número da semana do ano
+        function getWeekNumber(date) {
+            const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+            const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
+            return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+        }
+
+        // Função para gerar a escala de equipes semanal
+        function generateSchedule() {
+            const scheduleData = [];
+            
+            // Data de início: 24 de março de 2025
+            const startDate = new Date(2025, 2, 24); // Mês em JS é 0-indexed, então 2 = março
+            // Data de fim: 31 de dezembro de 2025
+            const endDate = new Date(2025, 11, 31); // 11 = dezembro
+            
+            let currentDate = new Date(startDate);
+            let teamIndex = 1; // Começando pela equipe 1
+            
+            while (currentDate <= endDate) {
+                const weekStart = new Date(currentDate);
+                
+                // Calcular o fim da semana (domingo)
+                const weekEnd = new Date(currentDate);
+                weekEnd.setDate(weekEnd.getDate() + (6 - weekEnd.getDay()));
+                
+                // Se o fim da semana passar do fim do ano, ajustar
+                if (weekEnd > endDate) {
+                    weekEnd.setTime(endDate.getTime());
+                }
+                
+                const weekNum = getWeekNumber(currentDate);
+                const period = `${formatDate(weekStart)} - ${formatDate(weekEnd)}`;
+                const month = weekStart.getMonth() + 1; // +1 porque em JS o mês começa em 0
+                
+                scheduleData.push({
+                    week: weekNum,
+                    period: period,
+                    teamId: teamIndex,
+                    month: month
+                });
+                
+                // Avançar para a próxima semana
+                currentDate.setDate(currentDate.getDate() + 7);
+                
+                // Rotacionar para a próxima equipe
+                teamIndex = teamIndex % 4 + 1;
+            }
+            
+            return scheduleData;
+        }
+
+        // Função para gerar o remanejamento mensal
+        function generateMonthlyRotation() {
+            const monthlyData = [];
+            
+            // Começa em abril (mês 4) e vai até dezembro (mês 12)
+            let teamIndex = 1; // Começando pela equipe 1
+            
+            const monthNames = [
+                "", "Janeiro", "Fevereiro", "Março", "Abril", 
+                "Maio", "Junho", "Julho", "Agosto", 
+                "Setembro", "Outubro", "Novembro", "Dezembro"
+            ];
+            
+            for (let month = 4; month <= 12; month++) {
+                monthlyData.push({
+                    month: month,
+                    monthName: monthNames[month],
+                    teamId: teamIndex
+                });
+                
+                // Rotacionar para a próxima equipe
+                teamIndex = teamIndex % 4 + 1;
+            }
+            
+            return monthlyData;
+        }
+
+        // Função para renderizar a tabela da escala semanal
+        function renderScheduleTable(filteredData = null) {
+            const tableBody = document.querySelector('#schedule-table tbody');
+            tableBody.innerHTML = '';
+            
+            const data = filteredData || generateSchedule();
+            
+            if (data.length === 0) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = '<td colspan="4" class="text-center">Nenhum resultado encontrado para os filtros selecionados.</td>';
+                tableBody.appendChild(tr);
+                return;
+            }
+            
+            data.forEach(week => {
+                const team = teams[week.teamId];
+                const tr = document.createElement('tr');
+                tr.dataset.month = week.month;
+                tr.dataset.team = week.teamId;
+                
+                tr.innerHTML = `
+                    <td>${week.week}</td>
+                    <td>${week.period}</td>
+                    <td>
+                        <span class="badge-team ${team.class}">${team.name}</span>
+                    </td>
+                    <td>${team.members.join(', ')}</td>
+                `;
+                
+                tableBody.appendChild(tr);
+            });
+        }
+
+        // Função para renderizar a tabela de remanejamento mensal
+        function renderMonthlyTable(filteredData = null) {
+            const tableBody = document.querySelector('#monthly-table tbody');
+            tableBody.innerHTML = '';
+            
+            const data = filteredData || generateMonthlyRotation();
+            
+            if (data.length === 0) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = '<td colspan="2" class="text-center">Nenhum resultado encontrado para os filtros selecionados.</td>';
+                tableBody.appendChild(tr);
+                return;
+            }
+            
+            data.forEach(month => {
+                const team = teams[month.teamId];
+                const tr = document.createElement('tr');
+                tr.dataset.month = month.month;
+                tr.dataset.team = month.teamId;
+                
+                tr.innerHTML = `
+                    <td>${month.monthName}</td>
+                    <td>
+                        <span class="badge-team ${team.class}">${team.name}</span>
+                        <small class="ms-2 text-muted">(${team.members.join(', ')})</small>
+                    </td>
+                `;
+                
+                tableBody.appendChild(tr);
+            });
+        }
+
+        // Função para aplicar filtros
+        function applyFilters() {
+            const monthFilter = document.getElementById('month-filter').value;
+            const teamFilter = document.getElementById('team-filter').value;
+            
+            // Converter para números para fazer as comparações corretamente
+            const monthFilterNum = monthFilter ? parseInt(monthFilter, 10) : null;
+            const teamFilterNum = teamFilter ? parseInt(teamFilter, 10) : null;
+            
+            // Filtrar dados da escala semanal
+            let scheduleData = generateSchedule();
+            if (monthFilterNum) {
+                scheduleData = scheduleData.filter(week => parseInt(week.month, 10) === monthFilterNum);
+            }
+            if (teamFilterNum) {
+                scheduleData = scheduleData.filter(week => parseInt(week.teamId, 10) === teamFilterNum);
+            }
+            renderScheduleTable(scheduleData);
+            
+            // Filtrar dados do remanejamento mensal
+            let monthlyData = generateMonthlyRotation();
+            if (monthFilterNum) {
+                monthlyData = monthlyData.filter(month => parseInt(month.month, 10) === monthFilterNum);
+            }
+            if (teamFilterNum) {
+                monthlyData = monthlyData.filter(month => parseInt(month.teamId, 10) === teamFilterNum);
+            }
+            renderMonthlyTable(monthlyData);
+            
+            // Aplicar filtro nas cards de equipes
+            const teamCards = document.querySelectorAll('.team-card');
+            teamCards.forEach(card => {
+                const cardTeamId = parseInt(card.dataset.team, 10);
+                if (!teamFilterNum || cardTeamId === teamFilterNum) {
+                    card.closest('.col-md-6').style.display = '';
+                } else {
+                    card.closest('.col-md-6').style.display = 'none';
+                }
+            });
+        }
+
+        // Função para alternar o tema
+        function toggleTheme() {
+            const html = document.documentElement;
+            const themeIcon = document.querySelector('#theme-toggle i');
+            
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                html.classList.add('light');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.remove('light');
+                html.classList.add('dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Aplicar tema salvo
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.remove('light');
+                document.documentElement.classList.add('dark');
+                document.querySelector('#theme-toggle i').classList.remove('fa-moon');
+                document.querySelector('#theme-toggle i').classList.add('fa-sun');
+            }
+            
+            // Renderizar tabelas iniciais
+            renderScheduleTable();
+            renderMonthlyTable();
+            
+            // Adicionar event listeners
+            document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+            
+            document.getElementById('month-filter').addEventListener('change', applyFilters);
+            document.getElementById('team-filter').addEventListener('change', applyFilters);
+            
+            document.getElementById('reset-filters').addEventListener('click', function() {
+                document.getElementById('month-filter').value = '';
+                document.getElementById('team-filter').value = '';
+                applyFilters();
+            });
+        });
+    </script>
+</body>
+</html>
