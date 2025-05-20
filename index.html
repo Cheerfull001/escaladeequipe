@@ -200,7 +200,6 @@
                                 <option value="1">Equipe 1</option>
                                 <option value="2">Equipe 2</option>
                                 <option value="3">Equipe 3</option>
-                                <option value="4">Equipe 4</option>
                             </select>
                         </div>
                     </div>
@@ -262,24 +261,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-3 mb-3">
-                        <div class="card h-100 border-0 shadow-sm team-card" data-team="4">
-                            <div class="card-header team-4">
-                                <h5 class="mb-0">LOADING...</h5>
-                            </div>
-                            <div class="card-body">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"></li>
-                                    <li class="list-group-item"></li>
-                                    <li class="list-group-item"></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+                    
         <!-- Escala de Equipes -->
         <div class="card mb-4" id="schedule-section">
             <div class="card-header" style="background-color: #059669; color: white;">
@@ -364,11 +346,6 @@
                 name: "Equipe 3",
                 members: ["Ibra", "Matheus", "Fábio"],
                 class: "team-3"
-            },
-            4: {
-                name: "Equipe 4",
-                members: ["Loading..."],
-                class: "team-4"
             }
         };
 
@@ -423,7 +400,7 @@
                 currentDate.setDate(currentDate.getDate() + 7);
                 
                 // Rotacionar para a próxima equipe
-                teamIndex = teamIndex % 4 + 1;
+                teamIndex = teamIndex % 3 + 1;
             }
             
             return scheduleData;
@@ -450,7 +427,7 @@
                 });
                 
                 // Rotacionar para a próxima equipe
-                teamIndex = teamIndex % 4 + 1;
+                teamIndex = teamIndex % 3 + 1;
             }
             
             return monthlyData;
